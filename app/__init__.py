@@ -42,6 +42,36 @@ def create_app():
     def inject_rates():
         rate = GoldSilverRate.query.order_by(GoldSilverRate.updated_at.desc()).first()
         return dict(current_rate=rate)
+    
+    @app.context_processor
+    def utility_processor():
+        def compute_price(product, rates):
+            if not product or not rates:
+                return 0
+
+            purity = float(product.metal_purity or 0)
+            quantity = float(product.metal_quantity or 0)
+            jarti_percent = float(product.jarti or 0)  # percentage of quantity
+            jyala_fixed = float(product.jyala or 0)    # fixed amount
+            gold_price = float(rates.gold_price or 0)
+            silver_price = float(rates.silver_price or 0)
+
+            # Adjust quantity with jarti%
+            adjusted_quantity = quantity + (quantity * (jarti_percent / 100))
+
+            if product.metal_type.lower() == "gold":
+                metal_value = (purity / 24) * adjusted_quantity * gold_price
+                return metal_value + jyala_fixed
+
+            elif product.metal_type.lower() == "silver":
+                metal_value = adjusted_quantity * silver_price
+                return metal_value + jyala_fixed
+
+            else:
+                return 0
+
+
+        return dict(compute_price=compute_price)
 
 
     return app

@@ -29,6 +29,7 @@
     <li class="list-group-item"><strong>Quantity:</strong> {{ product.metal_quantity }} tola</li>
     <li class="list-group-item"><strong>Jarti:</strong> {{ product.jarti }}%</li>
     <li class="list-group-item"><strong>Jyala:</strong> Rs. {{ product.jyala }}</li>
+    <li class="list-group-item"><strong>Total Price:</strong> Rs. {{ compute_price(product, current_rate) | round(2) }}</li>
   </ul>
 
   {% if product.images %}

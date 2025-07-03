@@ -98,7 +98,7 @@
                      </div>
                      <div class="col">
                          <div class="fw-bold">{{ product.name | capitalize}}</div>
-                         <div class="fw-bold text-primary-color">Rs. 300000</div>
+                         <div class="fw-bold text-primary-color">Rs. {{ compute_price(product, current_rate) | round(2) }}</div>
                          <div class="fw-semibold">{{ product.store.store_name | capitalize }}</div>
                          <div class="d-flex align-items-center mt-1">
                              <span class="text-muted small text-center">Metal: <strong>{{ product.metal_type }}</strong></span>
