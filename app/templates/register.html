@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card rounded-3 border-0 shadow p-4">
+    <h6 class="text-primary-color mb-3 mt-3 fw-semibold">
+        Create Your Account
+    </h6>
+    <p class="text-start fw-semibold">
+        Already have an account? 
+        <a href="/login" class="text-primary-color" style="text-decoration: underline;">
+            Login Here <i class="bi bi-arrow-down"></i>
+        </a>
+    </p>
+
+    <form method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <div class="row mb-3">
+            <div class="col">
+                <label>{{ form.phone.label }}</label>
+                {{ form.phone(class="form-control") }}
+
+                <label>{{ form.email.label }}</label>
+                {{ form.email(class="form-control") }}
+
+                <label>{{ form.password.label }}</label>
+                {{ form.password(class="form-control") }}
+
+                <label>{{ form.password2.label }}</label>
+                {{ form.password2(class="form-control") }}
+            </div>
+        </div>
+
+        <hr>
+
+        <h6 class="text-primary-color mb-3 fw-semibold">Store Details</h6>
+
+        <div class="row mb-3">
+            <div class="col">
+                <label>{{ form.store_name.label }}</label>
+                {{ form.store_name(class="form-control") }}
+
+                <label>{{ form.store_address.label }}</label>
+                {{ form.store_address(class="form-control") }}
+
+                <label>Store Location:</label>
+                <div id="map" style="height:300px; border:1px solid #ddd;"></div>
+
+                <!-- Hidden latitude/longitude fields -->
+                {{ form.latitude(type="hidden", id="latitude") }}
+                {{ form.longitude(type="hidden", id="longitude") }}
+
+                <label>{{ form.phone2.label }}</label>
+                {{ form.phone2(class="form-control") }}
+
+                <label>{{ form.store_logo.label }}</label>
+                {{ form.store_logo(class="form-control") }}
+            </div>
+        </div>
+
+        <div class="row">
+            <input type="submit" class="btn btn-app fw-bold" value="Register">
+        </div>
+    </form>
+</div>
+<!-- Leaflet CSS/JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+// Initialize the map
+var map = L.map('map').setView([27.7, 85.3], 13); // Default to Kathmandu
+
+// Add OpenStreetMap tiles
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+}).addTo(map);
+
+// Add a draggable marker
+var marker = L.marker([27.7, 85.3], {draggable:true}).addTo(map);
+
+// If browser supports geolocation, center on user's location
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+        map.setView([lat, lng], 16);
+        marker.setLatLng([lat, lng]);
+        // Set hidden fields
+        document.getElementById("latitude").value = lat;
+        document.getElementById("longitude").value = lng;
+    });
+}
+
+// Update hidden fields whenever marker is moved
+marker.on('move', function(e) {
+    var lat = e.latlng.lat;
+    var lng = e.latlng.lng;
+    document.getElementById("latitude").value = lat;
+    document.getElementById("longitude").value = lng;
+});
+</script>
+{% endblock %}

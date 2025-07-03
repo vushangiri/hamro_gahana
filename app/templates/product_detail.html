@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card rounded-3 border-0 shadow p-4">
+  <div class="row mb-3">
+    <div class="col-6">
+        <a href="{{ back_url }}" class="btn btn-sm btn-outline-secondary">
+            &laquo; Back
+        </a>
+    </div>
+    <div class="col-6">
+        <a href="{{ url_for('user.view_store', store_id=product.store.id) }}" class="btn btn-sm btn-app">
+            🏬 Go To Store
+        </a>
+    </div>
+  </div>
+
+  {% if product.display_picture %}
+  <img src="{{ url_for('static', filename='uploads/products/' ~ product.display_picture) }}" class="img-fluid rounded mb-3">
+  {% endif %}
+
+  <h5>{{ product.name }}</h5>
+  <p class="text-muted">{{ product.description or "No description provided." }}</p>
+
+  <ul class="list-group mb-3">
+    <li class="list-group-item"><strong>Category:</strong> {{ product.category }}</li>
+    <li class="list-group-item"><strong>Metal Type:</strong> {{ product.metal_type }}</li>
+    <li class="list-group-item"><strong>Purity:</strong> {{ product.metal_purity }}</li>
+    <li class="list-group-item"><strong>Quantity:</strong> {{ product.metal_quantity }} tola</li>
+    <li class="list-group-item"><strong>Jarti:</strong> {{ product.jarti }}%</li>
+    <li class="list-group-item"><strong>Jyala:</strong> Rs. {{ product.jyala }}</li>
+  </ul>
+
+  {% if product.images %}
+  <div class="row">
+    {% for img in product.images %}
+    <div class="col-4 mb-2">
+      <img src="{{ url_for('static', filename='uploads/products/' ~ img) }}" class="img-fluid rounded">
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

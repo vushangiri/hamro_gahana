@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}"> -->
+      <link rel="icon" href="{{ url_for ('static', filename='img/gem_white.png') }}" type="image/png">
+      <title>Hamro Gahana</title>
+      <!-- Bootstrap css -->
+      <link rel="stylesheet" href="{{ url_for ('static', filename='vender/bootstrap/css/bootstrap.min.css') }}">
+      <!-- Custom css -->
+      <link rel="stylesheet" href="{{ url_for ('static', filename='css/style.css') }}">
+      <meta name="theme-color" content="#ffa734">
+   </head>
+   <body>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+         {% if messages %}
+            {% for category, message in messages %}
+               <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }} alert-dismissible fade show" role="alert">
+               {{ message }}
+               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+               </div>
+            {% endfor %}
+         {% endif %}
+      {% endwith %}
+
+      {% if current_rate %}
+      <div style="
+         background-color: #f5f5f5;
+         padding: 0.4rem 1rem;
+         font-size: 0.9rem;
+         border-bottom: 1px solid #ddd;
+         display: flex;
+         justify-content: center;
+         gap: 2rem;
+      ">
+      <span>
+         🟡 <strong>Gold:</strong> Rs. {{ "{:,.2f}".format(current_rate.gold_price) }}
+      </span>
+      <span>
+         ⚪ <strong>Silver:</strong> Rs. {{ "{:,.2f}".format(current_rate.silver_price) }}
+      </span>
+      </div>
+      {% endif %}
+      <!-- App Header -->
+      <Header>
+         <div class="app-header d-flex justify-content-center align-items-center">
+            <div class="d-flex align-items-center">
+               <div class="d-flex align-items-center">
+                  <a href="/" style="color: white;">
+                  <i class="bi bi-gem me-2 app-header-icon"></i>
+                  <span class="app-header-title">Hamro Gahana</span>
+                  </a>
+               </div>
+               <div class="d-flex me-0 ms-5 align-items-center">
+                  {% if current_user.is_authenticated %}
+                  <a href="/logout" class="btn btn-sm btn-app">Logout</a>
+                  {% else %}
+                  <a href="/login" class="btn btn-sm btn-app">Login</a>
+                  {% endif %}
+               </div>
+            </div>
+         </div>
+      </Header>
+      <!-- Main Content Area -->
+      <div class="content-area">
+         {% block content %}
+         {% endblock %}
+      </div>
+      <!-- Bottom Navigation Bar (App-style) -->
+      <Navbar>
+         <div class="bottom-nav">
+            {% if current_user.is_authenticated %}
+            
+               {% if current_user.role == 'admin' %}
+               <a href="{{ url_for('admin.all_stores') }}" class="nav-item {% if admin_stores %}active{% endif %}">
+                  <i class="bi bi-list"></i>
+                  <span>Stores</span>
+               </a>
+               <a href="{{ url_for('admin.set_rates') }}" class="nav-item {% if set_rates %}active{% endif %}">
+                  <i class="bi bi-currency-exchange"></i>
+                  <span>Set Rates</span>
+               </a>
+               <a href="{{ url_for('admin.admin_profile') }}" class="nav-item {% if profile %}active{% endif %}">
+                  <i class="bi bi-person"></i>
+                  <span>Profile</span>
+               </a>
+               
+               {% else %} 
+               <a href="{{ url_for('user.dashboard') }}" class="nav-item {% if dashboard %}active{% endif %}">
+                  <i class="bi bi-speedometer2"></i>
+                  <span>Dashboard</span>
+               </a>
+               <a href="{{ url_for('user.profile') }}" class="nav-item {% if profile %}active{% endif %}">
+                  <i class="bi bi-person"></i>
+                  <span>Profile</span>
+               </a>
+               {% endif %}
+            {% else %}
+            <a href="/" class="nav-item {% if home %}active{% endif %}">
+            <i class="bi bi-house-door"></i>
+            <span>Home</span>
+            </a>
+            <a href="/explore" class="nav-item {% if explore %}active{% endif %}">
+            <i class="bi bi-search"></i>
+            <span>Explore</span>
+            </a>
+            {% endif %}
+            
+            <!-- <a href="/messages" class="nav-item {% if messages %}active{% endif %}">
+            <i class="bi bi-chat-right-dots"></i>
+            <span>Messages</span>
+            </a>
+            <a href="/profile" class="nav-item {% if profile %}active{% endif %}">
+            <i class="bi bi-person"></i>
+            <span>Profile</span>
+            </a> -->
+         </div>
+      </Navbar>
+
+      <!-- Bootstrap bundle js -->
+      <script src="{{ url_for ('static', filename='vender/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+      {% block script %} {% endblock %}
+      <!-- Script js -->
+      <!-- <script src="{{ url_for ('static', filename='js/script.js') }}"></script>  -->
+      <!-- <script>
+         if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('{{ url_for("static", filename="service-worker.js") }}')
+            .then(reg => console.log("Service Worker registered!", reg))
+            .catch(err => console.error("Service Worker registration failed:", err));
+         }
+      </script> -->
+   </body>
+</html>

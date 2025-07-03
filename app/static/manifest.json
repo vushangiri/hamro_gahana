@@ -1,0 +1,21 @@
+{
+  "name": "Hamro Gahana",
+  "short_name": "Gahana",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffa734",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/static/icons/gem_white.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/icons/tm.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

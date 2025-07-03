@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card rounded-3 border-0 shadow p-4">
+  <h6 class="section-header mb-3 mt-2">Add New Product</h6>
+
+  <form method="post" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+
+    <div class="mb-3">
+      <label>{{ form.name.label }}</label>
+      {{ form.name(class="form-control") }}
+      {% for error in form.name.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label>{{ form.description.label }}</label>
+      {{ form.description(class="form-control") }}
+      {% for error in form.description.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label>{{ form.display_picture.label }}</label>
+      {{ form.display_picture(class="form-control") }}
+      {% for error in form.display_picture.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label>{{ form.images.label }}</label>
+      {{ form.images(class="form-control") }}
+      {% for error in form.images.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label>{{ form.category.label }}</label>
+      {{ form.category(class="form-control") }}
+      {% for error in form.category.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label>{{ form.metal_type.label }}</label>
+      {{ form.metal_type(class="form-control", id="metal_type") }}
+      {% for error in form.metal_type.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label>{{ form.metal_purity.label }}</label>
+      {{ form.metal_purity(class="form-control", id="metal_purity") }}
+      {% for error in form.metal_purity.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label>{{ form.metal_quantity.label }}</label>
+      {{ form.metal_quantity(class="form-control") }}
+      {% for error in form.metal_quantity.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label>{{ form.jarti.label }}</label>
+      {{ form.jarti(class="form-control") }}
+      {% for error in form.jarti.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label>{{ form.jyala.label }}</label>
+      {{ form.jyala(class="form-control") }}
+      {% for error in form.jyala.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mt-3">
+      {{ form.submit(class="btn btn-app fw-bold") }}
+    </div>
+  </form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const metalTypeField = document.getElementById("metal_type");
+  const metalPurityField = document.getElementById("metal_purity").parentElement;
+
+  function updatePurity() {
+    const metalType = metalTypeField.value;
+
+    if (metalType === "silver") {
+      // Generate random purity
+      // const randomPurity = Math.floor(Math.random() * (100 - 90 + 1)) + 90;
+      document.getElementById("metal_purity").value = 1;
+      metalPurityField.style.display = "none";
+    } else {
+      metalPurityField.style.display = "block";
+      document.getElementById("metal_purity").value = "";
+    }
+  }
+
+  // Initial call
+  updatePurity();
+
+  // Update on change
+  metalTypeField.addEventListener("change", updatePurity);
+});
+</script>
+{% endblock %}

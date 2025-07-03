@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card rounded-3 border-0 shadow p-4">
+  <h6 class="section-header mb-3 mt-2">Edit Product</h6>
+
+  <form method="post" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+
+    <div class="mb-3">
+      <label>{{ form.name.label }}</label>
+      {{ form.name(class="form-control") }}
+      {% for error in form.name.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label>{{ form.description.label }}</label>
+      {{ form.description(class="form-control") }}
+      {% for error in form.description.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label>Current Display Picture:</label><br>
+      {% if product.display_picture %}
+        <img src="{{ url_for('static', filename='uploads/products/' ~ product.display_picture) }}" width="150" class="rounded shadow-sm mb-2">
+      {% else %}
+        <p class="text-muted">No display picture uploaded.</p>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label>{{ form.display_picture.label }} (Upload to replace)</label>
+      {{ form.display_picture(class="form-control") }}
+      {% for error in form.display_picture.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label>Current Additional Images:</label><br>
+      {% if product.images %}
+        <div class="d-flex flex-wrap gap-2">
+          {% for img in product.images %}
+            <img src="{{ url_for('static', filename='uploads/products/' ~ img) }}" width="100" class="rounded shadow-sm">
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="text-muted">No additional images uploaded.</p>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label>{{ form.images.label }} (Upload to replace all)</label>
+      {{ form.images(class="form-control") }}
+      {% for error in form.images.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label>{{ form.category.label }}</label>
+      {{ form.category(class="form-control") }}
+      {% for error in form.category.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label>{{ form.metal_type.label }}</label>
+      {{ form.metal_type(class="form-control", id="metal_type") }}
+      {% for error in form.metal_type.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label>{{ form.metal_purity.label }}</label>
+      {{ form.metal_purity(class="form-control", id="metal_purity") }}
+      {% for error in form.metal_purity.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label>{{ form.metal_quantity.label }}</label>
+      {{ form.metal_quantity(class="form-control") }}
+      {% for error in form.metal_quantity.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label>{{ form.jarti.label }}</label>
+      {{ form.jarti(class="form-control") }}
+      {% for error in form.jarti.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label>{{ form.jyala.label }}</label>
+      {{ form.jyala(class="form-control") }}
+      {% for error in form.jyala.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mt-3">
+      {{ form.submit(class="btn btn-app fw-bold") }}
+    </div>
+  </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const metalTypeField = document.getElementById("metal_type");
+  const metalPurityField = document.getElementById("metal_purity").parentElement;
+
+  function updatePurity() {
+    const metalType = metalTypeField.value;
+    if (metalType === "silver") {
+      
+      document.getElementById("metal_purity").value = 1;
+      metalPurityField.style.display = "none";
+    } else {
+      metalPurityField.style.display = "block";
+      document.getElementById("metal_purity").value = `{{ product.metal_purity }}`;
+    }
+  }
+
+  updatePurity();
+  metalTypeField.addEventListener("change", updatePurity);
+});
+</script>
+
+{% endblock %}

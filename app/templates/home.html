@@ -1,0 +1,293 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<!-- featured image section -->
+<div class="p-3">
+    <div class="bus-header position-relative shadow">
+        <img src="{{ url_for ('static', filename='img/tm.png') }}" alt="Featured Image" class="img-fluid w-100 rounded-3 featured-image">
+    </div>
+</div>
+
+<div class='page-content'>
+
+    <!-- featured jewel section -->
+    <h6 class="section-header mt-0">Featured Products</h6>
+    <div class="scroll-container">
+        {% for product in featured_products %}
+        <a href="{{ url_for('user.product_detail', product_id=product.id, next=request.full_path) }}" class="scroll-item shadow">
+            <div class='row'>
+                <div class='col'>
+                    <img src="{{ url_for('static', filename='uploads/products/' ~ product.display_picture) }}" alt="Featured Image" class="img-fluid w-100 rounded-3" style="height: 130px;">
+                </div>
+                <div class="col">
+                    <div class="fw-bold">{{ product.name | capitalize }}</div>
+                    <div class="fw-bold text-primary-color">Rs. 300000</div>
+                    <div class="fw-semibold">{{ product.store.store_name | capitalize }}</div>
+                    <div class="d-flex align-items-center mt-1">
+                        <span class="text-muted small text-center">Metal: <strong>{{ product.metal_type }}</strong></span>
+                    </div>
+                    <div class="d-flex align-items-center mt-1">
+                        <span class="text-muted small text-center">Purity: <strong>{{ product.metal_purity }}K</strong></span>
+                    </div>
+                    <div class="d-flex align-items-center mt-1">
+                        <span class="text-muted small text-center1">Quantity: <strong>{{ product.metal_quantity }} Tola</strong></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- <button class="btn p-0 position-absolute position-rt">
+            <i class="bi bi-heart"></i>
+            </button> -->
+        </a>
+        {% endfor %}
+
+        <!-- <a href="#" class="scroll-item shadow">
+            <div class='row'>
+                <div class='col'>
+                    <img src="{{ url_for ('static', filename='img/tm.png') }}" alt="Featured Image" class="img-fluid w-100 rounded-3 ">
+                </div>
+                <div class="col">
+                    <div class="fw-bold">Gold Necklace</div>
+                    <div class="fw-bold text-primary-color">Rs. 300000</div>
+                    <div class="d-flex align-items-center mt-1">
+                        <span class="text-muted small text-center">Metal: <strong>Gold</strong></span>
+                    </div>
+                    <div class="d-flex align-items-center mt-1">
+                        <span class="text-muted small text-center">Purity: <strong>24k</strong></span>
+                    </div>
+                    <div class="d-flex align-items-center mt-1">
+                        <span class="text-muted small text-center">Quantity: <strong>2 Tola</strong></span>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn p-0 position-absolute position-rt">
+            <i class="bi bi-heart"></i>
+            </button>
+        </a> -->
+
+    </div>
+
+
+    <!-- Shop by Categories -->
+    <h6 class="section-header mt-3">Shop by Categories</h6>
+    <div class="row g-3 mb-4">
+        <div class="col-6">
+        <a href="/explore?category=necklaces" class="card h-100 rounded-3 border-0 shadow">
+            <div class="card-body text-center">
+                <div class="icon-160x100 mx-auto d-flex align-items-center justify-content-center rounded-3 overflow-hidden">
+                    <!-- <i class="bi bi-qr-code text-white fs-24"></i> -->
+                    <img src="{{ url_for ('static', filename='img/px4.jpg') }}" alt="Featured Image" class="img-fluid w-100 rounded-3 ">
+                </div>
+                <h6 class="card-title mb-0 mt-3 fs-14">Necklaces</h6>
+            </div>
+        </a>
+        </div>
+        <div class="col-6">
+        <a href="/explore?category=earrings" class="card h-100 rounded-3 border-0 shadow">
+            <div class="card-body text-center">
+                <div class="icon-160x100 mx-auto d-flex align-items-center justify-content-center rounded-3 overflow-hidden">
+                    <img src="{{ url_for ('static', filename='img/px5.jpg') }}" alt="Featured Image" class="img-fluid w-100 rounded-3 ">
+                </div>
+                <h6 class="card-title mb-0 mt-3 fs-14">Earrings</h6>
+            </div>
+        </a>
+        </div>
+        <div class="col-6">
+        <a href="/explore?category=bracelets" class="card h-100 rounded-3 border-0 shadow">
+            <div class="card-body text-center">
+                <div class="icon-160x100 mx-auto d-flex align-items-center justify-content-center rounded-3 overflow-hidden">
+                    <img src="{{ url_for ('static', filename='img/px3.jpg') }}" alt="Featured Image" class="img-fluid w-100 rounded-3 ">
+                </div>
+                <h6 class="card-title mb-0 mt-3 fs-14">Bracelets & Bangles</h6>
+            </div>
+        </a>
+        </div>
+        <div class="col-6">
+        <a href="/explore?category=rings" class="card h-100 rounded-3 border-0 shadow">
+            <div class="card-body text-center">
+                <div class="icon-160x100 mx-auto d-flex align-items-center justify-content-center rounded-3 overflow-hidden">
+                    <img src="{{ url_for ('static', filename='img/px2.jpg') }}" alt="Featured Image" class="img-fluid w-100 rounded-3 ">
+                </div>
+                <h6 class="card-title mb-0 mt-3 fs-14">Rings</h6>
+            </div>
+        </a>
+        </div>
+    </div>
+
+    <!-- Popular Products -->
+    <h6 class="section-header mt-3">Popular Products</h6>
+    {% for product in popular_products %}
+    <div class="row g-3 mb-4">
+        <div class='col'>
+            <a href="{{ url_for('user.product_detail', product_id=product.id, next=request.full_path) }}" class="card h-100 rounded-3 border-0 shadow">
+                
+                <div class="card-body">
+                    <div class='row'>
+                        <div class='col'>
+                            <img src="{{ url_for('static', filename='uploads/products/' ~ product.display_picture) }}" alt="Featured Image" class="img-fluid w-100 rounded-3" style="height: 130px;">
+                        </div>
+                        <div class="col">
+                            <div class="fw-bold">{{ product.name | capitalize }}</div>
+                            <div class="fw-bold text-primary-color">Rs. 300000</div>
+                            <div class="fw-semibold">{{ product.store.store_name | capitalize }}</div>
+                            <div class="d-flex align-items-center mt-1">
+                                <span class="text-muted small text-center">Metal: <strong>{{ product.metal_type }}</strong></span>
+                            </div>
+                            <div class="d-flex align-items-center mt-1">
+                                <span class="text-muted small text-center">Purity: <strong>{{ product.metal_purity }}k</strong></span>
+                            </div>
+                            <div class="d-flex align-items-center mt-1">
+                                <span class="text-muted small text-center">Quantity: <strong>{{ product.metal_quantity }} Tola</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <button class="btn p-0 position-absolute position-rt">
+                    <i class="bi bi-heart"></i>
+                    </button> -->
+                    
+                </div>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+    <!-- <div class="row g-3 mb-4">
+        <div class='col'>
+            <a href="my-tickets.html" class="card h-100 rounded-3 border-0 shadow">
+                
+                <div class="card-body">
+                    <div class='row'>
+                        <div class='col'>
+                            <img src="{{ url_for ('static', filename='img/tm.png') }}" alt="Featured Image" class="img-fluid w-100 rounded-3 ">
+                        </div>
+                        <div class="col">
+                            <div class="fw-bold">Gold Necklace</div>
+                            <div class="fw-bold text-primary-color">Rs. 300000</div>
+                            <div class="d-flex align-items-center mt-1">
+                                <span class="text-muted small text-center">Metal: <strong>Gold</strong></span>
+                            </div>
+                            <div class="d-flex align-items-center mt-1">
+                                <span class="text-muted small text-center">Purity: <strong>24k</strong></span>
+                            </div>
+                            <div class="d-flex align-items-center mt-1">
+                                <span class="text-muted small text-center">Quantity: <strong>2 Tola</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn p-0 position-absolute position-rt">
+                    <i class="bi bi-heart"></i>
+                    </button>
+                    
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="row g-3 mb-4">
+        <div class='col'>
+            <a href="my-tickets.html" class="card h-100 rounded-3 border-0 shadow">
+                
+                <div class="card-body">
+                    <div class='row'>
+                        <div class='col'>
+                            <img src="{{ url_for ('static', filename='img/tm.png') }}" alt="Featured Image" class="img-fluid w-100 rounded-3 ">
+                        </div>
+                        <div class="col">
+                            <div class="fw-bold">Gold Necklace</div>
+                            <div class="fw-bold text-primary-color">Rs. 300000</div>
+                            <div class="d-flex align-items-center mt-1">
+                                <span class="text-muted small text-center">Metal: <strong>Gold</strong></span>
+                            </div>
+                            <div class="d-flex align-items-center mt-1">
+                                <span class="text-muted small text-center">Purity: <strong>24k</strong></span>
+                            </div>
+                            <div class="d-flex align-items-center mt-1">
+                                <span class="text-muted small text-center">Quantity: <strong>2 Tola</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn p-0 position-absolute position-rt">
+                    <i class="bi bi-heart"></i>
+                    </button>
+                    
+                </div>
+            </a>
+        </div>
+    </div> -->
+    <div class="row g-3 mb-4">
+        <div class='col text-center'>
+            <a href="/explore" class="btn action-btn secondary-action-btn">
+               View All
+            </a>
+        </div>
+    </div>
+
+
+    <!-- nearby stores section -->
+    <h6 class="section-header mt-3">Nearby Stores</h6>
+    <div id="nearby-stores" class="scroll-container">
+        Loading nearby stores...
+
+        <!-- <a href="#" class="scroll-item p-0 circular-img-card shadow">
+            <img src="{{ url_for ('static', filename='img/tm.png') }}" alt="Featured Image" class="p-3 img-fluid circular-img">
+            <div class="fw-bold text-center">R.K. Jewellers</div>
+            <div class="fw-bold text-primary-color text-center">~ 1.3 Km</div>
+        </a>
+
+        <a href="#" class="scroll-item p-0 circular-img-card shadow">
+            <img src="{{ url_for ('static', filename='img/tm.png') }}" alt="Featured Image" class="p-3 img-fluid circular-img">
+            <div class="fw-bold text-center">R.K. Jewellers</div>
+            <div class="fw-bold text-primary-color text-center">~ 1.3 Km</div>
+        </a>
+
+        <a href="#" class="scroll-item p-0 circular-img-card shadow">
+            <img src="{{ url_for ('static', filename='img/tm.png') }}" alt="Featured Image" class="p-3 img-fluid circular-img">
+            <div class="fw-bold text-center">R.K. Jewellers</div>
+            <div class="fw-bold text-primary-color text-center">~ 1.3 Km</div>
+        </a> -->
+
+        
+
+    </div>
+
+
+
+
+</div>
+{% endblock %}
+{% block script %}
+<script>
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        fetch(`/api/nearby-stores?lat=${position.coords.latitude}&lng=${position.coords.longitude}`)
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById("nearby-stores");
+            if (data.length === 0) {
+                container.innerHTML = "No nearby stores found.";
+                return;
+            }
+            let html = '';
+            data.forEach(store => {
+                html += `<a href="/store/${store.id}" class="scroll-item p-0 circular-img-card shadow">
+                    <img src="/static/uploads/${store.logo || 'default.png'}" alt="Featured Image" class="p-3 img-fluid circular-img" style="max-height: 130px;">
+                  <div class="fw-bold text-center">${store.store_name}</div>
+                  <div class="fw-bold text-primary-color text-center">~ ${store.distance} km away</div>
+                </a>`;
+            });
+            container.innerHTML = html;
+        })
+        .catch(error => {
+            document.getElementById("nearby-stores").innerHTML = "Error loading stores.";
+            console.error(error);
+        });
+    },
+    function(error) {
+        document.getElementById("nearby-stores").innerHTML = "Location permission denied.";
+    });
+} else {
+    document.getElementById("nearby-stores").innerHTML = "Geolocation is not supported.";
+}
+</script>
+{% endblock %}

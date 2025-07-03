@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card rounded-3 border-0 shadow p-4">
+    <h6 class="text-primary-color mb-3 mt-3 fw-semibold">
+       Enter Your Credentials
+    </h6>
+    <p class="text-start fw-semibold">Don't have an account? <a href="/register" class="text-primary-color" style="text-decoration: underline;">Register Here <i class="bi bi-arrow-down"></i></a></p>
+    <form method="post">
+       <div class="row mb-3">
+            <div class="col">
+          
+                <label>Phone</label><input type="number" name="phone" class="form-control" required/>
+                <br>
+                <label>Password</label><input type="password" name="password" class="form-control" required/>
+          
+            </div>
+        </div>
+       <div class='row'>
+        <p class="text-start fw-semibold">Forgot Password? <a href="{{ url_for('auth.forgot_password') }}" class="text-primary-color" style="text-decoration: underline;">Click Here</a></p>
+         <input type="submit" class="btn btn-app fw-bold" value="Login">
+      </div>
+      </div>       
+    
+    </form>
+ </div>
+
+
+
+<!-- 
+<h2>Login</h2>
+<form method="post">
+    Phone: <input type="text" name="phone"><br>
+    Password: <input type="password" name="password"><br>
+    <input type="submit" value="Login">
+</form> -->
+{% endblock %}

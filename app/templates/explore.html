@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<!-- Search Section -->
+<div class="search-card">
+    <h6 class="text-primary-color mb-3 fw-semibold">
+       <i class="bi bi-search me-2"></i>Search jewellery
+    </h6>
+    <form method="get">
+       <div class="row mb-3">
+         <div class="col">
+          
+          <input type="text" name="search" class="form-control" id="searchName" placeholder="Enter Jewellery or Store Name" value="{{ search }}">
+          
+          
+       </div>
+       <div class='col-2'>
+         <button type="submit" class="btn-app pulse-animation p-2 fw-bold btn">
+            <i class="bi bi-search"></i>
+            </button>
+
+      </div>
+      </div>
+    <h6 class="text-primary-color mb-3 fw-semibold">
+         <i class="bi bi-gear me-2"></i>Filters
+      </h6>
+        <div class="mb-3">
+         <div class='row'>
+            <div class='col-6'>
+               <label for="toCategory" class="form-label">
+                  <i class="bi bi-geo-alt me-1 text-primary-color"></i>Category
+                  </label>
+               <select class="form-select" id="toCategory" name="category">
+                  <option value="all" {% if category == 'all' %}selected {% endif %}>All</option>
+                  <option value="necklaces" {% if category == 'necklaces' %}selected {% endif %}>Necklaces</option>
+                  <option value="earrings" {% if category == 'earrings' %}selected {% endif %}>Earrings</option>
+                  <option value="bracelets" {% if category == 'bracelets' %}selected {% endif %}>Bracelets</option>
+                  <option value="rings" {% if category == 'rings' %}selected {% endif %}>Rings</option>
+               </select>
+
+            </div>
+            <div class='col-6'>
+
+               <label for="metalType" class="form-label">
+               <i class="bi bi-gem me-1 text-primary-color"></i>Metal
+               </label>
+               <select class="form-select" id="metalType" name="metal_type">
+                  <option value="both" {% if metal_type == 'both' %}selected {% endif %}>Both</option>
+                  <option value="gold" {% if metal_type == 'gold' %}selected {% endif %}>Gold</option>
+                  <option value="silver" {% if metal_type == 'silver' %}selected {% endif %}>Silver</option>
+               </select>
+            </div>
+         </div>
+         <!-- <div class='row mt-2'>
+            <div class='col-6'>
+               <label for="toLocation" class="form-label">
+                  <i class="bi bi-geo-alt me-1 text-primary-color"></i>Purity
+                  </label>
+               <select class="form-select" id="toLocation">
+                  <option selected>24k</option>
+                  <option>23k</option>
+                  <option>22k</option>
+                  <option>21k</option>
+                  <option>20k</option>
+                  <option>19k</option>
+                  <option>18k</option>
+               </select>
+
+            </div>
+            <div class='col-6'>
+
+               <label for="metalType" class="form-label">
+               <i class="bi bi-gem me-1 text-primary-color"></i>Price
+               </label>
+               <select class="form-select" id="metalType">
+                  <option selected>Select Price range</option>
+                  <option>Under</option>
+               </select>
+            </div>
+         </div> -->
+      </div> 
+       
+    
+    </form>
+ </div>
+ <!-- Results -->
+ <h6 class="section-header mt-3">Results</h6>
+ {% for product in products %}
+ <div class="row g-3 mb-4">
+     <div class='col'>
+         <a href="{{ url_for('user.product_detail', product_id=product.id, next=request.full_path) }}" class="card h-100 rounded-3 border-0 shadow">
+             
+             <div class="card-body">
+                 <div class='row'>
+                     <div class='col'>
+                         <img src="{{ url_for('static', filename='uploads/products/' ~ product.display_picture) }}" alt="Featured Image" class="img-fluid w-100 rounded-3" style="height: 130px;">
+                     </div>
+                     <div class="col">
+                         <div class="fw-bold">{{ product.name | capitalize}}</div>
+                         <div class="fw-bold text-primary-color">Rs. 300000</div>
+                         <div class="fw-semibold">{{ product.store.store_name | capitalize }}</div>
+                         <div class="d-flex align-items-center mt-1">
+                             <span class="text-muted small text-center">Metal: <strong>{{ product.metal_type }}</strong></span>
+                         </div>
+                         <div class="d-flex align-items-center mt-1">
+                             <span class="text-muted small text-center">Purity: <strong>{{ product.metal_purity }}k</strong></span>
+                         </div>
+                         <div class="d-flex align-items-center mt-1">
+                             <span class="text-muted small text-center">Quantity: <strong>{{ product.metal_quantity }} Tola</strong></span>
+                         </div>
+                         
+                     </div>
+                 </div>
+                 <!-- <button class="btn p-0 position-absolute position-rt">
+                 <i class="bi bi-heart"></i>
+                 </button> -->
+                 
+             </div>
+         </a>
+     </div>
+ </div>
+ {% endfor %}
+ <!-- <div class="row g-3 mb-4">
+     <div class='col'>
+         <a href="my-tickets.html" class="card h-100 rounded-3 border-0 shadow">
+             
+             <div class="card-body">
+                 <div class='row'>
+                     <div class='col'>
+                         <img src="{{ url_for ('static', filename='img/tm.png') }}" alt="Featured Image" class="img-fluid w-100 rounded-3 ">
+                     </div>
+                     <div class="col">
+                         <div class="fw-bold">Gold Necklace</div>
+                         <div class="fw-bold text-primary-color">Rs. 300000</div>
+                         <div class="d-flex align-items-center mt-1">
+                             <span class="text-muted small text-center">Metal: <strong>Gold</strong></span>
+                         </div>
+                         <div class="d-flex align-items-center mt-1">
+                             <span class="text-muted small text-center">Purity: <strong>24k</strong></span>
+                         </div>
+                         <div class="d-flex align-items-center mt-1">
+                             <span class="text-muted small text-center">Quantity: <strong>2 Tola</strong></span>
+                         </div>
+                     </div>
+                 </div>
+                 <button class="btn p-0 position-absolute position-rt">
+                 <i class="bi bi-heart"></i>
+                 </button>
+                 
+             </div>
+         </a>
+     </div>
+ </div>
+ <div class="row g-3 mb-4">
+     <div class='col'>
+         <a href="my-tickets.html" class="card h-100 rounded-3 border-0 shadow">
+             
+             <div class="card-body">
+                 <div class='row'>
+                     <div class='col'>
+                         <img src="{{ url_for ('static', filename='img/tm.png') }}" alt="Featured Image" class="img-fluid w-100 rounded-3 ">
+                     </div>
+                     <div class="col">
+                         <div class="fw-bold">Gold Necklace</div>
+                         <div class="fw-bold text-primary-color">Rs. 300000</div>
+                         <div class="d-flex align-items-center mt-1">
+                             <span class="text-muted small text-center">Metal: <strong>Gold</strong></span>
+                         </div>
+                         <div class="d-flex align-items-center mt-1">
+                             <span class="text-muted small text-center">Purity: <strong>24k</strong></span>
+                         </div>
+                         <div class="d-flex align-items-center mt-1">
+                             <span class="text-muted small text-center">Quantity: <strong>2 Tola</strong></span>
+                         </div>
+                     </div>
+                 </div>
+                 <button class="btn p-0 position-absolute position-rt">
+                 <i class="bi bi-heart"></i>
+                 </button>
+                 
+             </div>
+         </a>
+     </div>
+ </div> -->
+ <div class="d-flex justify-content-between mt-3">
+  {% if pagination.has_prev %}
+    <a href="{{ url_for('main.explore', page=pagination.prev_num, search=search, category=category, metal_type=metal_type) }}" class="btn btn-outline-secondary">&laquo; Previous</a>
+  {% else %}
+    <span></span>
+  {% endif %}
+
+  {% if pagination.has_next %}
+    <a href="{{ url_for('main.explore', page=pagination.next_num, search=search, category=category, metal_type=metal_type) }}" class="btn btn-outline-secondary">Next &raquo;</a>
+  {% else %}
+    <span></span>
+  {% endif %}
+</div>
+ <!-- <div class="row g-3 mb-4">
+     <div class='col text-center'>
+         <a href="{{ prev_url }}" class="btn action-btn secondary-action-btn {% if page == 1 %} disabled {% endif %}">
+            <i class="bi bi-arrow-left"></i> Previous
+         </a>
+     </div>
+     <div class='col text-center'>
+         <a href="{{ next_url }}" class="btn action-btn primary-action-btn {% if not has_next %} disabled {% endif %}">
+            Next <i class="bi bi-arrow-right"></i>
+         </a>
+     </div>
+ </div> -->
+{% endblock %}
