@@ -5,6 +5,18 @@ from .forms import RateForm, AdminProfileForm
 
 admin = Blueprint('admin', __name__)
 
+@admin.route("/store/<int:store_id>/products")
+@login_required
+def store_products(store_id):
+    if current_user.role != "admin":
+        abort(403)
+
+    store = Store.query.get_or_404(store_id)
+    products = Product.query.filter_by(store_id=store.id).order_by(Product.id.desc()).all()
+    return render_template("admin_product_list.html", store=store, products=products)
+
+
+
 @admin.route('/admin/stores')
 @login_required
 def all_stores():
